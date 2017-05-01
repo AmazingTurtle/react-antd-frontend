@@ -1,27 +1,26 @@
+import {AppContainer} from 'react-hot-loader';
+import {LocaleProvider} from 'antd';
+import enUS from 'antd/lib/locale-provider/en_US';
 import React from 'react';
-import { render } from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
-import AppState from './AppState';
+import ReactDOM from 'react-dom';
+import mobx from 'mobx';
 import App from './App';
+import './index.style.less';
 
-const appState = new AppState();
+mobx.useStrict(true);
 
-render(
-  <AppContainer>
-    <App appState={appState} />
-  </AppContainer>,
-  document.getElementById('root')
-);
+const render = (Component) => {
+    ReactDOM.render(
+        <AppContainer>
+            <LocaleProvider locale={enUS}>
+                <Component />
+            </LocaleProvider>
+        </AppContainer>
+        , document.getElementById('application'));
+};
 
-if (module.hot) {
-  module.hot.accept('./App', () => {
-    const NextApp = require('./App').default;
 
-    render(
-      <AppContainer>
-        <NextApp appState={appState} />
-      </AppContainer>,
-      document.getElementById('root')
-    );
-  });
-}
+render(App);
+
+if (module.hot)
+    module.hot.accept('App', (NewApp) => render(NewApp));

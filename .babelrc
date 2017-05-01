@@ -4,5 +4,15 @@
     "es2015",
     "stage-1"
   ],
-  "plugins": ["transform-decorators-legacy", "react-hot-loader/babel"]
+  "plugins": [
+    "transform-decorators-legacy",
+    "react-hot-loader/babel",
+    [
+      "import",
+      {
+        "libraryName": "antd",
+        "style": "css"
+      }
+    ]
+  ]
 }
