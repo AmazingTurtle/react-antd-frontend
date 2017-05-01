@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {observer} from 'mobx-react';
 //noinspection JSUnresolvedVariable
 import {observable, action} from 'mobx';
-import { Menu, Icon } from 'antd';
+import { Layout, Menu, Icon } from 'antd';
 import PropTypes from 'prop-types';
 
 @observer
@@ -44,6 +44,7 @@ export default class Navigation extends Component {
     current = 'home';
 
     handleNavigate = action((e) => {
+        if (this.current === e.key) { return; }
         this.current = e.key;
         const { history } = this.context.router;
         history.push(this.routes.find(route => route.key === e.key).link);
@@ -58,15 +59,16 @@ export default class Navigation extends Component {
         ));
 
         return (
-            <div>
-                <Menu
-                    onClick={this.handleNavigate}
-                    selectedKeys={[this.current]}
-                    mode="horizontal"
+            <Layout.Header>
+                <Menu onClick={this.handleNavigate}
+                      selectedKeys={[this.current]}
+                      mode="horizontal"
+                      theme="dark"
+                      style={{ lineHeight: '64px' }}
                 >
                     {navigation}
                 </Menu>
-            </div>
+            </Layout.Header>
         );
     }
 }
